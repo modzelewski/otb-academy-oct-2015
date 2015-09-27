@@ -5,10 +5,6 @@ class Book
 		@title = title
 	end
 
-	def price
-		8
-	end
-
 	def to_s
 		@title
 	end
