@@ -7,11 +7,23 @@ class ShoppingCart
 	end
 
 	def sum
-		sets = discount_sets(duplicates_counts(items))
-		total = 0
-		sets.each {|set| total += sum_set(set)}
-		puts sets[0]
-		total
+		best_price(3,5)
+	end
+
+	def best_price(min_set_price, max_set_price)
+		prices = []
+		min_set_price.upto(max_set_price).each do
+			|index|
+			prices.push(sum_with_set_size(index))
+		end
+		prices.min
+	end
+
+	def sum_with_set_size(set_size)
+		sets = discount_sets(duplicates_counts(items), set_size)
+		sets.inject(0) { |total, value| 
+			total += sum_set(value)
+		}
 	end
 
 	def sum_set(set)
@@ -22,7 +34,7 @@ class ShoppingCart
 		8
 	end
 
-	def discount_sets(duplicates)
+	def discount_sets(duplicates, max_count)
 		sets = []
 		while duplicates.size > 0 do
 			set = []
@@ -33,6 +45,7 @@ class ShoppingCart
 					set.push(1)
 					duplicates[index] -= 1
 				end
+				break if set.count == max_count
 			end
 			duplicates.delete_if {|value| value == 0 } 
 		end
@@ -43,7 +56,7 @@ class ShoppingCart
 		(items.uniq.map { 
 			|item| 
 			items.count(item)
-		}).sort
+		}).sort.reverse
 	end
 
 	def items
@@ -64,3 +77,4 @@ class ShoppingCart
 		}
 	end
 end
+

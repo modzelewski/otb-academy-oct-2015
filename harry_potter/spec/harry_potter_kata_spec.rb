@@ -55,13 +55,22 @@ RSpec.describe "Harry Potter Kata" do
 		expect(@cart.sum).to eq(45.2) # 5 * 8 * 0.75 + 8 * 2 * 0.95
 	end
 
-	xit "adds multiple discounts finding best deal" do
+	it "adds multiple discounts finding best deal" do
 		@cart.add_items([book_1, book_1])
 		@cart.add_items([book_2, book_2])
 		@cart.add_items([book_3, book_3])
 		@cart.add_items([book_4])
 		@cart.add_items([book_5])
 		expect(@cart.sum).to eq(51.20) # 4 * 8 * 0.80 + 4 * 8 * 0.80
+	end
+
+	it "adds complex multiple discounts finding best deal" do
+		@cart.add_items([book_1, book_1, book_1])
+		@cart.add_items([book_2, book_2])
+		@cart.add_items([book_3, book_3, book_3, book_3])
+		@cart.add_items([book_4, book_4])
+		@cart.add_items([book_5])
+		expect(@cart.sum).to eq(78.8) 
 	end
 
 end
